@@ -1,39 +1,18 @@
-import sys
+import argparse
+from collections.abc import Sequence
+from pathlib import Path
 
-from PySide6.QtGui import QColor, QPalette
-from PySide6.QtWidgets import QApplication, QMainWindow, QStyleFactory
-
-
-def apply_dark_theme(app: QApplication) -> None:
-    app.setStyle(QStyleFactory.create("Fusion"))
-
-    palette = QPalette()
-    palette.setColor(QPalette.ColorRole.Window, QColor("#202124"))
-    palette.setColor(QPalette.ColorRole.WindowText, QColor("#f1f3f4"))
-    palette.setColor(QPalette.ColorRole.Base, QColor("#17181a"))
-    palette.setColor(QPalette.ColorRole.AlternateBase, QColor("#292a2d"))
-    palette.setColor(QPalette.ColorRole.ToolTipBase, QColor("#292a2d"))
-    palette.setColor(QPalette.ColorRole.ToolTipText, QColor("#f1f3f4"))
-    palette.setColor(QPalette.ColorRole.Text, QColor("#f1f3f4"))
-    palette.setColor(QPalette.ColorRole.Button, QColor("#292a2d"))
-    palette.setColor(QPalette.ColorRole.ButtonText, QColor("#f1f3f4"))
-    palette.setColor(QPalette.ColorRole.BrightText, QColor("#ffffff"))
-    palette.setColor(QPalette.ColorRole.Link, QColor("#8ab4f8"))
-    palette.setColor(QPalette.ColorRole.Highlight, QColor("#8ab4f8"))
-    palette.setColor(QPalette.ColorRole.HighlightedText, QColor("#17181a"))
-    app.setPalette(palette)
+from interface.application import run_console
 
 
-def main() -> int:
-    app = QApplication(sys.argv)
-    apply_dark_theme(app)
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run the Holden Console.")
+    parser.add_argument(
+        "config_file", type=Path, help="Path to the console JSON config"
+    )
+    args = parser.parse_args(argv)
 
-    window = QMainWindow()
-    window.setWindowTitle("Holden Console")
-    window.resize(1100, 700)
-    window.show()
-
-    return app.exec()
+    return run_console(args.config_file)
 
 
 if __name__ == "__main__":
