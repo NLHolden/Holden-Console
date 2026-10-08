@@ -1,1 +1,1 @@
-pytest_plugins = ("tests.mocks.conftest",)
+pytest_plugins = ("tests.mocks.spotify_fixtures",)
