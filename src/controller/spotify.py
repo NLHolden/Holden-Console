@@ -3,6 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 from controller.model import SpotifyTrack
 
+
 class SpotifyClient:
     def __init__(
         self,
@@ -35,7 +36,7 @@ class SpotifyClient:
             duration_ms=track["duration_ms"],
         )
 
-    def get_playback_progress(self) -> int:
+    def get_playback_progress(self) -> int | None:
         current = self._client.current_user_playing_track()
 
         if current is None or current["item"] is None:

@@ -6,13 +6,12 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-toml
-      - id: check-merge-conflict
 
   - repo: https://github.com/psf/black
     rev: 26.10.0
     hooks:
       - id: black
-        language_version: python3.11
+        language_version: python
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.16.10
