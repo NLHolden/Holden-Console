@@ -20,5 +20,5 @@ def test_tournament_rejects_nonpositive_buy_in(buy_in: float) -> None:
 
 
 def test_tournament_rejects_unknown_site() -> None:
-    with pytest.raises(ValidationError):
+    with pytest.raises(ValueError):
         Tournament(name="Daily Special", buy_in=10, site=PokerSite("unknown"))
