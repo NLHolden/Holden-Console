@@ -1,7 +1,10 @@
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from typing import Any, Protocol
 
 from controller.model import SpotifyTrack
+
+
+class SpotipyApi(Protocol):
+    def current_user_playing_track(self) -> dict[str, Any] | None: ...
 
 
 class SpotifyClient:
@@ -10,15 +13,22 @@ class SpotifyClient:
         client_id: str,
         client_secret: str,
         redirect_uri: str,
+        spotify_api: SpotipyApi | None = None,
     ) -> None:
-        self._client = spotipy.Spotify(
-            auth_manager=SpotifyOAuth(
-                scope="user-read-currently-playing",
-                client_id=client_id,
-                client_secret=client_secret,
-                redirect_uri=redirect_uri,
+        if spotify_api is None:
+            import spotipy
+            from spotipy.oauth2 import SpotifyOAuth
+
+            spotify_api = spotipy.Spotify(
+                auth_manager=SpotifyOAuth(
+                    scope="user-read-currently-playing",
+                    client_id=client_id,
+                    client_secret=client_secret,
+                    redirect_uri=redirect_uri,
+                )
             )
-        )
+
+        self._client = spotify_api
 
     def get_current_track(self) -> SpotifyTrack | None:
         current = self._client.current_user_playing_track()
