@@ -26,7 +26,7 @@ def main() -> None:
                 enabled = "visible" if item["sceneItemEnabled"] else "hidden"
                 print(f"  - {item['sourceName']} ({enabled})")
 
-                if item['sourceName'] == 'Spotify':
+                if item["sourceName"] == "Spotify":
                     print(item)
 
 
